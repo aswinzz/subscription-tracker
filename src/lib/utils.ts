@@ -61,19 +61,9 @@ export async function getLogoUrl(websiteUrl: string) {
   if (!websiteUrl.startsWith('https://')) {
     websiteUrl = 'https://' + websiteUrl;
   }
-  const response = await fetch(websiteUrl);
-  const html = await response.text();
-
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, 'text/html');
-
-  const faviconLink = doc.querySelector('link[rel="icon"]') as HTMLLinkElement;
-  const appleTouchIconLink = doc.querySelector('link[rel="apple-touch-icon"]') as HTMLLinkElement;
-  const shortcutIconLink = doc.querySelector('link[rel="shortcut icon"]') as HTMLLinkElement;
-
-  const logoUrl = faviconLink?.href || appleTouchIconLink?.href || shortcutIconLink?.href;
-
-  return logoUrl;
+  const response = await fetch(`/api/fetch-logo?url=${websiteUrl}`);
+  const data = await response.json();
+  return data.logoUrl;
 };
 
 

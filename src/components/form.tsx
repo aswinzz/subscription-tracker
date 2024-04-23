@@ -52,7 +52,8 @@ export default function Form({ data, closeDrawer }: {data?: ITEM, closeDrawer: (
         }
     }, [formActions])
 
-    const debouncedFetchLogo = debounce(fetchLogo, 3000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const debouncedFetchLogo = useCallback(debounce(fetchLogo, 3000), []);
 
     const onChange = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         console.log(e.target.id, e.target.value);
