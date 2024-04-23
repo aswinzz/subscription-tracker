@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input"
 import { ComingSoon } from "./ui/comingsoon";
 
-function SearchIcon(props) {
+function SearchIcon(props: any) {
     return (
       <svg
         {...props}
