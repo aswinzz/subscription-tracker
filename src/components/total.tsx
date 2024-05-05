@@ -10,7 +10,7 @@ export default function Total({ currency, amount }: { currency: string, amount: 
             <CardTitle>Total Amount</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col items-start justify-center gap-4">
-            <div className="text-4xl font-bold">{currency} {amount}</div>
+            <div className="text-4xl font-bold">{currency} {amount} / Month</div>
             </CardContent>
         </Card>
     );

@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input"
 import { ComingSoon } from "./ui/comingsoon";
+import { ChangeEvent } from "react";
 
 function SearchIcon(props: any) {
     return (
@@ -22,16 +23,13 @@ function SearchIcon(props: any) {
   }
 
 
-export default function Search() {
+export default function Search({ value, onChange }: { value: string | undefined, onChange: (e: ChangeEvent<HTMLInputElement>) => void }) {
     return (
-      <ComingSoon className="w-full">
-        <div className="flex items-center space-x-4">
-          <div className="relative flex items-center w-full max-w-md">
-              <SearchIcon className="absolute left-2.5 top-2.5 w-4 h-4 text-gray-500 dark:text-gray-400" />
-              <Input disabled className="pl-8" placeholder="Search for a subscription" type="search" />
-          </div>
+      <div className="flex items-center space-x-4">
+        <div className="relative flex items-center w-full max-w-md">
+            <SearchIcon className="absolute left-2.5 top-2.5 w-4 h-4 text-gray-500 dark:text-gray-400" />
+            <Input value={value} onChange={onChange} className="pl-8" placeholder="Search for a subscription" type="search" />
         </div>
-      </ComingSoon>
-
+      </div>
     );
 }
