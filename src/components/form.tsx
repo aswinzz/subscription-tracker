@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { DrawerTitle, DrawerDescription, DrawerHeader, DrawerFooter } from "@/components/ui/drawer"
@@ -29,48 +29,20 @@ import { ITEM } from '@/lib/types';
 
 export default function Form({ data, closeDrawer }: {data?: ITEM, closeDrawer: () => void}) {
     const [formData, formActions] = useForm(data);
-    console.log(formData);
-    // id: number,
-    // serviceName: string,
-    // amount: number,
-    // currency: string,
-    // cycle: string,
-    // billingDate: string,
-    // notes?: string,
-    // website: string,
-    // logo?: string,
-
-    const fetchLogo = useCallback(async (value: string) => {
-        try {
-            console.log('FETCHING LOGO....');
-            const logo = await getLogoUrl(value);
-            if (logo) {
-                formActions.update('logo', logo);
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }, [formActions])
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const debouncedFetchLogo = useCallback(debounce(fetchLogo, 3000), []);
 
     const onChange = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         console.log(e.target.id, e.target.value);
-        if (e.target.id === 'website') {
-            debouncedFetchLogo(e.target.value);
-        }
         formActions.update(e.target.id, e.target.value);
-    }, [debouncedFetchLogo, formActions]);
+    }, [formActions]);
 
     const onSelectChange = useCallback((id: string, value: string) => {
         formActions.update(id, value);
     }, [formActions]);
 
-    const onSave = useCallback(() => {
-        formActions.save();
+    const onSave = useCallback(async () => {
+        await formActions.save(!!data);
         closeDrawer();
-    }, [formActions, closeDrawer]);
+    }, [formActions, closeDrawer, data]);
 
     return (
         <>

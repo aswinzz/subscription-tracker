@@ -1,6 +1,7 @@
 import { ITEM } from '@/lib/types';
 import { deleteItem, setData } from '@/lib/utils';
 import { useState } from 'react';
+import { createSupabaseClient } from '@/utils/supabase/server'
 
 interface FormData {
     id: number,
@@ -35,19 +36,21 @@ const initialState = {
 const useForm = (data?: ITEM): [FormData, FormActions] => {
   const existingData = data as FormData;
   const [formData, setFormData] = useState<FormData>(existingData || initialState);
+  const supabase = createSupabaseClient();
 
-  const save = (update = false) => {
-    setData({
+  const save = async (update = false) => {
+    await setData({
         ...formData,
         id: update ? formData.id : -1, // for creation we pass id as -1, it will be generated in the util
-    });
+    }, supabase);
   };
 
   const deleteData = () => {
-    deleteItem(formData.id);
+    deleteItem(formData.id, supabase);
   };
 
   const update = (key: string, value: string | number) => {
+    console.log(key, value, formData);
     setFormData({
         ...formData,
         [key]: value,

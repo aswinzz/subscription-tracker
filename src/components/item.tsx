@@ -3,12 +3,14 @@ import { ITEM } from "@/lib/types";
 import { prettyDate } from "@/lib/utils";
 import Image from "next/image";
 import { DrawerTrigger, DrawerTitle, DrawerDescription, DrawerHeader, DrawerFooter, DrawerContent, Drawer } from "@/components/ui/drawer"
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useContext } from 'react';
 import Form from "@/components/form";
 import { Logo } from "@/components/ui/logo";
 import { CURRENCY_SYMBOLS } from "@/lib/constants";
+import { SubscriptionContext } from "@/context/SessionContext";
 
-export default function Item({item, loadData}: {item: ITEM, loadData: () => void }) {
+export default function Item({item}: {item: ITEM }) {
+    const { loadData } = useContext(SubscriptionContext);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const closeDrawer = useCallback(() => {
       setDrawerOpen(false);
