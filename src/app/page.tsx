@@ -39,7 +39,8 @@ export default function Home() {
       console.log('toSync', toSync);
       setUnsycnedData(toSync);
     } else {
-      setSubscriptions(data || []);
+      const filteredData = search ? data.filter((item: ITEM) => item.serviceName.toLowerCase().includes(search.toLowerCase())) : data;
+      setSubscriptions(filteredData || []);
     }
   }, []);
 
