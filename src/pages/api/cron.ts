@@ -6,7 +6,7 @@ export default async function handler(
   response: NextApiResponse,
 ) {
     const DOMAIN = "sandboxdc9528a0a8124e5eb68cba37c1b2d01d.mailgun.org";
-    const mg = mailgun({apiKey: "99116b3990daa523d973c8f4da7d3c49-ed54d65c-10910d6d", domain: DOMAIN});
+    const mg = mailgun({apiKey: process.env.MAIL_GUN_KEY, domain: DOMAIN});
     const data = {
         from: "Mailgun Sandbox <postmaster@sandboxdc9528a0a8124e5eb68cba37c1b2d01d.mailgun.org>",
         to: "aswinvb.aswin6@gmail.com",
